@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": [".eslintrc.js", "postcss.config.js", "commitlint.config.js"],
+  "include": [".eslintrc.js", "postcss.config.js", "commitlint.config.js", "convert.js", "parse.js"],
   "compilerOptions": {
     "allowJs": true
   }
