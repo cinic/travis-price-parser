@@ -10,6 +10,7 @@
     "postinstall": "yarn husky install"
   },
   "dependencies": {
+    "antd": "^4.18.5",
     "atomic-router": "^0.4.0",
     "effector": "^22.1.2",
     "effector-react": "^22.0.6",
@@ -29,6 +30,7 @@
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
+    "autoprefixer": "^10.4.2",
     "cheerio": "^1.0.0-rc.10",
     "dpdm": "^3.8.0",
     "eslint": "^8.6.0",
@@ -40,6 +42,7 @@
     "nano-staged": "^0.5.0",
     "node-fetch": "2",
     "parcel": "^2.2.0",
+    "postcss-preset-env": "^7.3.1",
     "prettier": "^2.5.1",
     "stylelint": "^14.2.0",
     "stylelint-config-prettier": "^9.0.3",
@@ -47,7 +50,8 @@
     "stylelint-order": "^5.0.0",
     "stylelint-prettier": "^2.0.0",
     "typescript": "^4.5.4",
-    "xlsx": "^0.17.5"
+    "xlsx": "^0.17.5",
+    "yargs": "^17.3.1"
   },
   "nano-staged": {
     "*.{js,ts}": "eslint --cache --fix",

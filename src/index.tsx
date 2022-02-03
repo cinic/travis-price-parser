@@ -3,8 +3,9 @@ import {render} from 'react-dom'
 import {createStore} from 'effector'
 import {useList, useStore} from 'effector-react'
 
-// import {h, remap, using} from 'forest'
-import jsonData from '../config/parsed-data.json'
+import jsonData from '../config/parsed-vi.json'
+
+import styles from './styles.module.css'
 
 const [header, ...data] = jsonData
 const $listHeader = createStore(header)
@@ -16,7 +17,7 @@ function App() {
   const list = useList($list, TableRow)
 
   return (
-    <div>
+    <div className={styles.app}>
       <table>
         <thead>
           <HeadRow />
@@ -28,38 +29,47 @@ function App() {
 }
 
 function HeadRow() {
-  const {productCode, productName, vendorCode, title, price, balance, rating, reviews} =
-    useStore($listHeader)
+  const {productName, vendorCode, title, price, balance, rating, reviews} = useStore($listHeader)
 
   return (
     <tr>
       <th>{vendorCode}</th>
-      <th>{productCode}</th>
       <th>{productName}</th>
       <th>{title}</th>
-      <th>{price}</th>
-      <th>{balance}</th>
-      <th>{rating}</th>
-      <th>{reviews}</th>
+      <th className={styles.price}>{price}</th>
+      <th className={styles.balance}>{balance}</th>
+      <th className={styles.rating}>{rating}</th>
+      <th className={styles.reviews}>{reviews}</th>
     </tr>
   )
 }
 
 function TableRow(row: typeof $list.defaultState[number]) {
-  const {productCode, productName, vendorCode, title, price, balance, rating, reviews, link} = row
+  const {productName, vendorCode, title, price, balance, rating, reviews, link} = row
 
   return (
     <tr>
       <td>{vendorCode}</td>
-      <td>{productCode}</td>
       <td>{productName}</td>
       <td>
         <a href={link}>{title}</a>
       </td>
-      <td>{price}</td>
-      <td>{balance}</td>
-      <td>{rating}</td>
-      <td>{reviews}</td>
+      <td className={styles.price}>
+        <ValueOrNa>{price}</ValueOrNa>
+      </td>
+      <td className={styles.balance}>
+        <ValueOrNa>{balance}</ValueOrNa>
+      </td>
+      <td className={styles.rating}>
+        <ValueOrNa>{rating}</ValueOrNa>
+      </td>
+      <td className={styles.reviews}>
+        <ValueOrNa>{reviews}</ValueOrNa>
+      </td>
     </tr>
   )
+}
+
+function ValueOrNa({children}) {
+  return <>{children || 'N/A'}</>
 }

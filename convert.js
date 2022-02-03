@@ -1,6 +1,10 @@
 const XLSX = require('xlsx')
 const fs = require('fs')
 const prettier = require('prettier')
+const yargs = require('yargs')
+
+const ARGUMENTS_START_INDEX = 2
+const argv = yargs(process.argv.slice(ARGUMENTS_START_INDEX)).argv
 
 function storeData(data, path) {
   try {
@@ -21,27 +25,25 @@ function readFirstSheet(data, options) {
 const data = readFirstSheet('./config/data.xlsx', {type: 'binary'})
 const [headRow, ...restRows] = data
 
+const {column = 'M', output = './config/data.json'} = argv
+
 const header = {
-  vendorCode: headRow.A,
-  productCode: headRow.B,
+  vendorCode: headRow.B,
   productName: headRow.D,
   // estimatedRetailPrice: headRow.F,
   photo: headRow.H,
-  link: headRow.N,
+  link: headRow[column],
 }
 const result = []
 
 restRows.forEach((row) => {
-  if (row.N !== '') {
-    result.push({
-      vendorCode: row.A,
-      productCode: row.B,
-      productName: row.D,
-      // estimatedRetailPrice: row.F,
-      photo: row.H,
-      link: row.N,
-    })
-  }
+  result.push({
+    vendorCode: row.B,
+    productName: row.D,
+    // estimatedRetailPrice: row.F,
+    photo: row.H,
+    link: row[column],
+  })
 })
 
 prettier.resolveConfig().then((options) => {
@@ -50,5 +52,5 @@ prettier.resolveConfig().then((options) => {
     parser: 'json',
   })
 
-  storeData(formatted, './config/data.json')
+  storeData(formatted, output)
 })
